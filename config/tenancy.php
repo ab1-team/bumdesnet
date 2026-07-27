@@ -22,7 +22,7 @@ return [
         'localhost',
         'bumdesnet.test',
         'akubumdes.com',
-        'bumdesnet.akubumdes.com'
+        'bumdesnet.siupk.com'
     ],
 
     /**
