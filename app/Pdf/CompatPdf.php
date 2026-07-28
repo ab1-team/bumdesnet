@@ -61,7 +61,50 @@ class CompatPdf extends BasePDF
 
     public function inline(string $filename = 'document.pdf'): Response
     {
-        return $this->stream($filename);
+        try {
+            return $this->stream($filename);
+        } catch (\Throwable $e) {
+            if ($this->isExecutableMissing($e)) {
+                return $this->htmlFallback($filename);
+            }
+
+            throw $e;
+        }
+    }
+
+    public function stream($filename = 'document.pdf', array $options = []): Response
+    {
+        try {
+            return parent::stream($filename, $options);
+        } catch (\Throwable $e) {
+            if ($this->isExecutableMissing($e)) {
+                return $this->htmlFallback($filename);
+            }
+
+            throw $e;
+        }
+    }
+
+    protected function isExecutableMissing(\Throwable $e): bool
+    {
+        $msg = strtolower($e->getMessage());
+
+        return str_contains($msg, 'permission denied')
+            || str_contains($msg, 'executable not found')
+            || str_contains($msg, 'wkhtmltopdf')
+            || str_contains($msg, 'sh: line')
+            || (int) $e->getCode() === 126;
+    }
+
+    protected function htmlFallback(string $filename): Response
+    {
+        $html = $this->getDomPDF()->outputHtml();
+
+        return new Response($html, 200, [
+            'Content-Type' => 'text/html; charset=utf-8',
+            'X-Pdf-Fallback' => '1',
+            'Content-Disposition' => 'inline; filename="'.str_replace('.pdf', '.html', $filename).'"',
+        ]);
     }
 
     protected function injectHeader(string $html, string $headerHtml, float $spacingPx): string
