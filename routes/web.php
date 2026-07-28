@@ -39,8 +39,15 @@ foreach (config('tenancy.central_domains') as $domain) {
     });
 
     Route::get('/link', function () {
-        $target = '/home/akubumdes/public_html/bumdesnet/storage/app/public';
-        $shortcut = '/home/akubumdes/public_html/bumdesnet/public/storage';
-        symlink($target, $shortcut);
+        $target = __DIR__ . '/../storage/app/public';
+        $shortcut = __DIR__ . '/../public/storage';
+
+        try {
+            symlink($target, $shortcut);
+
+            return response()->json('Symlink created successfully.');
+        } catch (\Exception $e) {
+            return response()->json('Failed to create symlink: ' . $e->getMessage());
+        }
     });
 }
