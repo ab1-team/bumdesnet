@@ -47,7 +47,7 @@ class SopController extends Controller
         if ($request->file('logo_busines') && $request->file('logo_busines')->isValid()) {
             $extension = $request->file('logo_busines')->getClientOriginalExtension();
             $filename = time() . '_' . $business->id . '_' . date('Ymd') . '.' . $extension;
-            $path = $request->file('logo_busines')->storeAs('logo', $filename);
+            $path = $request->file('logo_busines')->storeAs('logo', $filename, 'public');
 
             if ($business->logo && $business->logo != 'default.png') {
                 Storage::disk('public')->delete('logo/' . $business->logo);

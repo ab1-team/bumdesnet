@@ -86,7 +86,7 @@ class ProfilController extends Controller
 
             $file = $request->file('profil-image');
             $nama_file = time() . '_' . $file->getClientOriginalName();
-            $file->storeAs('profil', $nama_file);
+            $file->storeAs('profil', $nama_file, 'public');
 
             // Update database menggunakan query builder seperti kamu mau
             $upload = User::where('id', $user->id)
