@@ -14,7 +14,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Database\Eloquent\Builder;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Http\Controllers\Controller;
 
 class DashboardController extends Controller

@@ -21,7 +21,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Controllers\Controller;
 

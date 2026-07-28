@@ -23,7 +23,7 @@ use App\Utils\Tanggal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Log;
-use Barryvdh\Snappy\Facades\SnappyPdf as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use App\Http\Controllers\Controller;
 use App\Models\Tenant\Product;
 
