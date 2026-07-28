@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy via SSH ke server SIDBM
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            cd /var/www/bumdesnet
+            git pull origin master
+            composer install
+            php artisan optimize:clear || true
+            php artisan config:clear || true
+            php artisan route:clear || true
+            php artisan view:clear || true
