@@ -42,12 +42,16 @@ foreach (config('tenancy.central_domains') as $domain) {
         $target = __DIR__ . '/../storage/app/public';
         $shortcut = __DIR__ . '/../public/storage';
 
+        if (file_exists($shortcut) || is_link($shortcut)) {
+            return response()->json('Symlink already exists.');
+        }
+
         try {
             symlink($target, $shortcut);
 
             return response()->json('Symlink created successfully.');
-        } catch (\Exception $e) {
-            return response()->json('Failed to create symlink: ' . $e->getMessage());
+        } catch (\Throwable $e) {
+            return response()->json('Failed to create symlink: ' . $e->getMessage(), 500);
         }
     });
 }
