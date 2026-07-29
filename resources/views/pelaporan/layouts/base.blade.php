@@ -168,7 +168,7 @@
                     </td>
                 </tr>
             </table>
-            <table width="100%" style="position: relative; top: -10px;">
+            <table width="100%" style="position: relative; top: 2px;">
                 <tr>
                     <td>
                         <span style="font-size: 8px; color: grey;">
