@@ -37,7 +37,7 @@
         <col width="8%">  <!-- Nilai Buku -->
     </colgroup>
     <thead>
-        <tr style="background: rgb(232, 232, 232);">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
             <th class="t l b" rowspan="2">No</th>
             <th class="t l b" rowspan="2">Tgl Beli</th>
             <th class="t l b" rowspan="2">Nama Barang</th>
@@ -52,7 +52,7 @@
             <th class="t l b" colspan="2">s.d. Tahun Ini</th>
             <th class="t l b r" rowspan="2">Nilai Buku</th>
         </tr>
-        <tr style="background: rgb(232, 232, 232);">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
             <th class="t l b">Umur</th>
             <th class="t l b">Biaya</th>
             <th class="t l b">Umur</th>
@@ -228,3 +228,4 @@
         </tr>
     </tbody>
 </table>
+

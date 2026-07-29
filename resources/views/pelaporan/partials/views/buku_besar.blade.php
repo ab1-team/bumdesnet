@@ -5,9 +5,9 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
-        <td colspan="3" align="center">
+        <td colspan="8" align="center">
             <div style="font-size: 18px;">
                 <b>BUKU BESAR {{ strtoupper($account->nama_akun) }}</b>
             </div>
@@ -17,14 +17,14 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" height="3"></td>
+        <td colspan="8" height="5"></td>
     </tr>
 </table>
 
-<div style="width: 100%; text-align: right;">Kode Akun : {{ $kode_akun }}</div>
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
+<div style="width: 100%; text-align: right; font-size: 11px;">Kode Akun : {{ $kode_akun }}</div>
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px; table-layout: fixed;">
     <thead>
-        <tr style="background: rgb(94, 94, 94); font-weight: bold; color: #ffffff;">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
             <th height="20" align="center" width="4%">No</th>
             <th align="center" width="10%">Tanggal</th>
             <th align="center" width="8%">Ref ID.</th>

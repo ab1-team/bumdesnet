@@ -1,7 +1,7 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }}</title>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="3" align="center">
             <div style="font-size: 18px;">
@@ -13,14 +13,14 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" height="3"></td>
+        <td colspan="3" height="5"></td>
     </tr>
 </table>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <thead>
-        <tr style="background: rgb(235, 234, 234);">
-            <th align="center" width="5%">No</th>
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
+            <th height="15" align="center" width="5%">No</th>
             <th align="center" width="55%">Nama Barang</th>
             <th align="center" width="10%">Stok</th>
             <th align="center" width="10%">Satuan</th>
@@ -30,7 +30,7 @@
     <tbody>
         @foreach ($products as $product)
             <tr class="{{ $loop->iteration % 2 == 1 ? 'row-white' : 'row-black' }}">
-                <td>{{ $loop->iteration }}</td>
+                <td height="15">{{ $loop->iteration }}.</td>
                 <td>{{ $product->name }}</td>
                 <td align="center">{{ $product->stok }}</td>
                 <td align="center">{{ $product->unit->name }}</td>

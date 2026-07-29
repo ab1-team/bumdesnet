@@ -14,7 +14,7 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="4" align="center">
             <div style="font-size: 18px;">
@@ -29,21 +29,21 @@
         <td colspan="4" height="5"></td>
     </tr>
 </table>
-<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <thead>
-        <tr style="background: rgb(235, 234, 234);">
-            <th align="center" width="55%">Rekening</th>
-            <th align="center" width="15%">s.d. Bulan Lalu</th>
-            <th align="center" width="15%">Bulan Ini</th>
-            <th align="center" width="15%">s.d. Bulan Ini</th>
+        <tr style="background: rgb(232, 232, 232); font-weight: bold; font-size: 12px;">
+            <th align="center" width="55%" height="16">Rekening</th>
+            <th align="center" width="15%">s.d. {{ $header_lalu ?? 'Bulan Lalu' }}</th>
+            <th align="center" width="15%">{{ $header_sekarang ?? 'Bulan Ini' }}</th>
+            <th align="center" width="15%">s.d. {{ $header_sekarang ?? 'Bulan Ini' }}</th>
         </tr>
     </thead>
 
     <tbody>
-        <tr style="background: rgb(200, 200, 200); text-transform: uppercase;">
+        <tr style="background: rgb(200, 200, 200); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="14">4. Pendapatan</td>
         </tr>
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="14">4.1.00.00. Pendapatan Usaha</td>
         </tr>
 
@@ -81,10 +81,10 @@
             <td align="right">{{ number_format($total_sd_bulan_ini, 2) }}</td>
         </tr>
 
-        <tr style="background: rgb(200, 200, 200); text-transform: uppercase;">
+        <tr style="background: rgb(200, 200, 200); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">5. Beban</td>
         </tr>
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="14">5.1.00.00. Beban Usaha</td>
         </tr>
 
@@ -122,7 +122,7 @@
             <td align="right">{{ number_format($total_bulan_ini, 2) }}</td>
             <td align="right">{{ number_format($total_sd_bulan_ini, 2) }}</td>
         </tr>
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">5.2.00.00. Beban Non Usaha
             </td>
         </tr>
@@ -168,7 +168,7 @@
             <td align="right">{{ number_format($saldo_sd_bulan_ini1, 2) }}</td>
         </tr>
 
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">4.2.00.00. Pendapatan Non Usaha</td>
         </tr>
 
@@ -206,7 +206,7 @@
             <td align="right">{{ number_format($total_bulan_ini, 2) }}</td>
             <td align="right">{{ number_format($total_sd_bulan_ini, 2) }}</td>
         </tr>
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">4.3.00.00. Pendapatan Luar biasa</td>
         </tr>
 
@@ -241,7 +241,7 @@
             <td align="right">{{ number_format($total_sd_bulan_ini, 2) }}</td>
         </tr>
 
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">5.3.00.00. Beban Non Usaha</td>
         </tr>
         @php
@@ -293,7 +293,7 @@
             </td>
             <td align="right">{{ number_format($saldo_sd_bulan_ini1 + $saldo_sd_bulan_ini2, 2) }}</td>
         </tr>
-        <tr style="background: rgb(150, 150, 150); text-transform: uppercase;">
+        <tr style="background: rgb(150, 150, 150); font-weight: bold; text-transform: uppercase;">
             <td colspan="4" height="16">5.4 Beban Pajak</td>
         </tr>
 
@@ -321,3 +321,4 @@
         </tr>
     </tbody>
 </table>
+

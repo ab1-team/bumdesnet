@@ -1,7 +1,7 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table border="0" width="100%">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="3" align="center">
             <div style="font-size: 18px;">
@@ -17,15 +17,15 @@
     </tr>
 </table>
 
-<table border="0" width="100%">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <thead>
-        <tr style="background: rgb(230, 230, 230); font-weight: bold;">
-            <th class="t l b" rowspan="2" width="40%">Rekening</th>
-            <th class="t l b" colspan="2" width="20%">Neraca Saldo</th>
-            <th class="t l b" colspan="2" width="20%">Laba Rugi</th>
-            <th class="t l b r" colspan="2" width="20%">Neraca</th>
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
+            <th rowspan="2" class="t l b" width="40%" height="30">&nbsp;Rekening</th>
+            <th colspan="2" class="t l b" width="20%">Neraca Saldo</th>
+            <th colspan="2" class="t l b" width="20%">Laba Rugi</th>
+            <th colspan="2" class="t l b r" width="20%">Neraca</th>
         </tr>
-        <tr style="background: rgb(230, 230, 230); font-weight: bold;">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
             <th class="t l b" width="10%">Debit</th>
             <th class="t l b" width="10%">Kredit</th>
             <th class="t l b" width="10%">Debit</th>
@@ -91,9 +91,14 @@
                 $jumlah_saldo_laba_rugi_kredit += $saldo_laba_rugi_kredit;
                 $jumlah_saldo_neraca_debit += $saldo_neraca_debit;
                 $jumlah_saldo_neraca_kredit += $saldo_neraca_kredit;
+
+                $bg = 'rgb(230, 230, 230)';
+                if ($loop->iteration % 2 == 0) {
+                    $bg = 'rgb(255, 255, 255)';
+                }
             @endphp
-            <tr>
-                <td class="t l b" align="left">
+            <tr style="background-color: {{ $bg }};">
+                <td class="t l b" align="left" height="15">
                     {{ trim($rek->kode_akun . '. ' . $rek->nama_akun) }}
                 </td>
                 <td class="t l b" align="right">
@@ -129,8 +134,8 @@
             $surplus_defisit = $saldo_pendapatan - $saldo_beban;
         @endphp
 
-        <tr style="background: rgb(167, 167, 167); font-weight: bold;">
-            <td class="t l b" align="center">Surplus/Defisit</td>
+        <tr style="background: rgb(110, 110, 110); color: #fff; font-weight: bold;">
+            <td class="t l b" align="center" height="20">Surplus/Defisit</td>
             <td class="t l b"></td>
             <td class="t l b"></td>
             <td class="t l b" align="right">
@@ -142,8 +147,8 @@
                 {{ $surplus_defisit < 0 ? '(' . number_format($surplus_defisit, 2) . ')' : number_format($surplus_defisit, 2) }}
             </td>
         </tr>
-        <tr style="background: rgb(242, 242, 242);">
-            <td class="t l b" align="center">Jumlah</td>
+        <tr style="background: rgb(167, 167, 167); font-weight: bold;">
+            <td class="t l b" align="center" height="20">Jumlah</td>
             <td class="t l b" align="right">
                 {{ $jumlah_saldo_debit < 0
                     ? '(' . number_format($jumlah_saldo_debit, 2) . ')'

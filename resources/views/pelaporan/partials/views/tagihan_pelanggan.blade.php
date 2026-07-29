@@ -17,7 +17,7 @@
         <div class="break"></div>
     @endif
 
-    <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
         <tr>
             <td colspan="3" align="center">
                 <div style="font-size: 18px; font-weight: bold;">
@@ -40,7 +40,7 @@
     </table>
     <table border="0" width="100%">
         <thead>
-            <tr style="background-color: rgb(230, 230, 230); font-weight: bold;">
+            <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
                 <th width="4%" class="t l b" rowspan="2">No</th>
                 <th width="21%" class="t l b" rowspan="2">Nama</th>
                 <th width="15%" class="t l b" rowspan="2">No. Induk</th>
@@ -200,3 +200,4 @@
         </tbody>
     </table>
 @endforeach
+

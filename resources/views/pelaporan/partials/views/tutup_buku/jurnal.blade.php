@@ -5,27 +5,30 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table>
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
-        <td colspan="7" align="center">
+        <td colspan="8" align="center">
             <div style="font-size: 18px;">
-                <b>JURNAL TRANSAKSI</b>
+                <b>JURNAL TUTUP BUKU</b>
             </div>
             <div style="font-size: 16px;">
                 <b>{{ strtoupper($sub_judul) }}</b>
             </div>
         </td>
     </tr>
+    <tr>
+        <td colspan="8" height="5"></td>
+    </tr>
 </table>
 
-<table border="0" width="100%">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <thead>
-        <tr>
-            <th align="center" width="4%">No</th>
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
+            <th height="15" align="center" width="4%">No</th>
             <th align="center" width="10%">Tanggal</th>
             <th align="center" width="8%">Ref ID.</th>
-            <th align="center" width="10%">Kd. Rek</th>
-            <th align="center" width="33%">Keterangan</th>
+            <th align="center" width="8%">Kd. Rek</th>
+            <th align="center" width="35%">Keterangan</th>
             <th align="center" width="15%">Debit</th>
             <th align="center" width="15%">Kredit</th>
             <th align="center" width="5%">Ins</th>
@@ -38,7 +41,7 @@
                 $rowClass = $loop->iteration % 2 == 0 ? 'row-black' : 'row-white';
             @endphp
             <tr class="{{ $rowClass }}">
-                <td rowspan="2" align="center">{{ $loop->iteration }}</td> <!-- Cetak nomor -->
+                <td height="15" rowspan="2" align="center">{{ $loop->iteration }}.</td>
                 <td rowspan="2" align="center">{{ Tanggal::tglIndo($transaction->tgl_transaksi) }}</td>
                 <td rowspan="2" align="left">{{ $transaction->id }}</td>
                 <td align="center">{{ $transaction->acc_debit->kode_akun }}</td>

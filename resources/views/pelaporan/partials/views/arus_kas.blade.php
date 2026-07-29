@@ -7,7 +7,7 @@
 <title>{{ $title }} {{ $sub_judul }}</title>
 
 {{-- Header --}}
-<table width="100%" cellspacing="0" cellpadding="4" style="font-size: 12px;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="3" align="center" style="font-size: 18px; font-weight: bold;">
             ARUS KAS
@@ -18,18 +18,14 @@
             {{ strtoupper($sub_judul) }}
         </td>
     </tr>
-</table>
-
-{{-- Spacer kecil, tidak menyebabkan page break --}}
-<table width="100%">
     <tr>
-        <td style="height: 10px;"></td>
+        <td colspan="3" height="5"></td>
     </tr>
 </table>
 
 {{-- Tabel Data --}}
-<table border="0" width="100%" align="center" style="font-size: 12px;">
-    <tr style="background: rgb(200, 200, 200); text-align: center;">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" align="center" style="font-size: 11px;">
+    <tr style="background: rgb(200, 200, 200); font-weight: bold; text-align: center;">
         <th width="5%">&nbsp;</th>
         <th width="75%">Nama Akun</th>
         <th width="20%">Jumlah</th>

@@ -29,7 +29,7 @@
 
 <table border="0" width="100%">
     <thead>
-        <tr style="background: rgb(235, 234, 234);">
+        <tr style="background: rgb(232, 232, 232); font-weight: bold; font-size: 12px;">
             <th class="t l b" align="center" width="55%">Rekening</th>
             <th class="t l b" align="center" width="15%">s.d. Bulan Lalu</th>
             <th class="t l b" align="center" width="15%">Bulan Ini</th>
@@ -318,3 +318,4 @@
         </tr>
     </tbody>
 </table>
+

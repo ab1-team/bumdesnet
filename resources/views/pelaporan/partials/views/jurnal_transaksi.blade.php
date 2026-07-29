@@ -5,23 +5,26 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table>
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
-        <td colspan="7" align="center">
+        <td colspan="8" align="center">
             <div style="font-size: 18px;"><b>JURNAL TRANSAKSI</b></div>
             <div style="font-size: 16px;"><b>{{ strtoupper($sub_judul) }}</b></div>
         </td>
     </tr>
+    <tr>
+        <td colspan="8" height="5"></td>
+    </tr>
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0">
+<table width="100%" border="0" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <thead>
-        <tr>
-            <th align="center" width="4%">No</th>
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
+            <th height="15" align="center" width="4%">No</th>
             <th align="center" width="10%">Tanggal</th>
             <th align="center" width="8%">Ref ID.</th>
-            <th align="center" width="10%">Kd. Rek</th>
-            <th align="center" width="33%">Keterangan</th>
+            <th align="center" width="8%">Kd. Rek</th>
+            <th align="center" width="35%">Keterangan</th>
             <th align="center" width="15%">Debit</th>
             <th align="center" width="15%">Kredit</th>
             <th align="center" width="5%">Ins</th>
@@ -38,7 +41,7 @@
                 $rowClass = $transaction['nomor'] % 2 == 0 ? 'row-black' : 'row-white';
             @endphp
             <tr class="{{ $rowClass }}">
-                <td>{{ $transaction['nomor'] }}</td>
+                <td height="15" align="center">{{ $transaction['nomor'] }}.</td>
                 <td align="center">{{ Tanggal::tglIndo($transaction['tgl_transaksi']) }}</td>
                 <td>{{ $transaction['id'] }}</td>
 
@@ -71,10 +74,10 @@
             @endphp
         @endforeach
 
-        <tr style="background-color: #d3d3d3;">
-            <td colspan="5" align="center"><strong>Total</strong></td>
-            <td align="right"><strong>{{ number_format($totalDebit, 2, ',', '.') }}</strong></td>
-            <td align="right"><strong>{{ number_format($totalKredit, 2, ',', '.') }}</strong></td>
+        <tr style="background: rgb(74, 74, 74); color: #fff; font-weight: bold;">
+            <td height="16" colspan="5" align="center">Total</td>
+            <td align="right">{{ number_format($totalDebit, 2, ',', '.') }}</td>
+            <td align="right">{{ number_format($totalKredit, 2, ',', '.') }}</td>
             <td></td>
         </tr>
     </tbody>

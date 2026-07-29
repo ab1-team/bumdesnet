@@ -39,7 +39,7 @@
     </table>
     <table border="0" width="100%">
         <thead>
-            <tr style="background: rgb(232, 232, 232); font-weight: bold;">
+            <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
                 <th class="t l b" width="3%" height="30">No</th>
                 <th class="t l b" width="12%">No.Induk</th>
                 <th class="t l b" width="8%">Tgl Pasang</th>
@@ -105,3 +105,4 @@
         </tbody>
     </table>
 @endforeach
+

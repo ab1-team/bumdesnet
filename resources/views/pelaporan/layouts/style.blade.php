@@ -1,7 +1,11 @@
 <style>
     * {
-        font-family: 'Arial', sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         box-sizing: border-box;
+    }
+
+    html {
+        margin: 0;
     }
 
     table {
@@ -9,12 +13,6 @@
         border-collapse: collapse;
         page-break-inside: avoid;
         width: 100%;
-        font-size: 11px;
-    }
-
-    table th {
-        background-color: #686666;
-        color: white;
     }
 
     tr {
@@ -22,26 +20,23 @@
         page-break-after: auto;
     }
 
-    tr.bold td {
-        font-weight: bold;
-    }
-
-    td:not(.p-0),
-    th:not(.p-0) {
+    table tr th,
+    table tr td,
+    table tr td table.p tr td {
         padding: 2px 4px !important;
         margin: 0 !important;
         border-collapse: collapse;
         vertical-align: middle;
+        font-size: 11px;
     }
 
-    .row-white {
-        background-color: #ffffff;
-        color: #000;
+    table tr td table tr td {
+        padding: 0 !important;
     }
 
-    .row-black {
-        background-color: #e0e0e0;
-        color: #000;
+    table.p0 tr th,
+    table.p0 tr td {
+        padding: 0px !important;
     }
 
     .page-break {
@@ -49,22 +44,22 @@
     }
 
     .break {
-        page-break-after: always
-    }
-
-    .t {
-        border-top: 1px solid black;
+        page-break-after: always;
     }
 
     .l {
-        border-left: 1px solid black;
+        border-left: 1px solid #000;
+    }
+
+    .t {
+        border-top: 1px solid #000;
     }
 
     .r {
-        border-right: 1px solid black;
+        border-right: 1px solid #000;
     }
 
     .b {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid #000;
     }
 </style>

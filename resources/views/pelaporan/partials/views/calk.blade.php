@@ -172,10 +172,10 @@
         </div>
         <table border="0">
             <thead>
-                <tr style="background: #c5c5c5; color: #000000;">
-                    <td width="10%">Kode</td>
-                    <td width="70%">Nama Akun</td>
-                    <td align="right" width="20%">Saldo</td>
+                <tr style="background: #000; color: #fff;">
+                    <td width="10%">&nbsp;Kode</td>
+                    <td width="70%">&nbsp;Nama Akun</td>
+                    <td align="right" width="20%">&nbsp;Saldo</td>
                 </tr>
                 <tr>
                     <td colspan="3" height="3"></td>
@@ -191,9 +191,9 @@
                     $saldo_akun = 0;
                 @endphp
                 
-                {{-- Level 1: rgb(110, 110, 110) --}}
-                <tr class="bold" style="background: rgb(110, 110, 110); color: #fff;">
-                    <td style="height: 28px;" colspan="3" align="center">
+                {{-- Level 1: rgb(74, 74, 74) --}}
+                <tr style="background: rgb(74, 74, 74); color: #fff; font-weight: bold;">
+                    <td height="20" colspan="3" align="center">
                         {{ $lev1->kode_akun }}. {{ $lev1->nama_akun }}
                     </td>
                 </tr>

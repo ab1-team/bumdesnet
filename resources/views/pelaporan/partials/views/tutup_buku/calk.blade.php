@@ -191,8 +191,8 @@
                         @php
                             $saldo_akun = 0;
                         @endphp
-                        <tr style="background: rgb(74, 74, 74); color: #fff;">
-                            <td style="height: 28px;" class="text-center" colspan="3">{{ $lev1->kode_akun }}.
+                        <tr style="background: rgb(74, 74, 74); color: #fff; font-weight: bold;">
+                            <td height="20" class="text-center" colspan="3">{{ $lev1->kode_akun }}.
                                 {{ $lev1->nama_akun }}
                             </td>
                         </tr>

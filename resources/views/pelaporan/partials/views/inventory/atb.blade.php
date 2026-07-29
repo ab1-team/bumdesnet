@@ -17,7 +17,7 @@
 
 <table border="0" width="100%">
     <thead>
-        <tr style="background: rgb(232, 232, 232); font-weight: bold; text-align: center;">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; text-align: center; color: #fff;">
             <th class="t l b" rowspan="2" width="3%">No</th>
             <th class="t l b" rowspan="2" width="8%">Tgl Beli</th>
             <th class="t l b" rowspan="2" width="20%">Nama Barang</th>
@@ -32,7 +32,7 @@
             <th class="t l b" colspan="2" width="12%">s.d. Tahun Ini</th>
             <th class="t l b r" rowspan="2" width="8%">Nilai Buku</th>
         </tr>
-        <tr style="background: rgb(232, 232, 232); text-align: center; font-weight: bold;">
+        <tr style="background: rgb(74, 74, 74); text-align: center; font-weight: bold; color: #fff;">
             <th class="t l b" width="4%">Umur</th>
             <th class="t l b" width="8%">Biaya</th>
             <th class="t l b" width="4%">Umur</th>
@@ -200,3 +200,4 @@
         </tr>
     </tbody>
 </table>
+

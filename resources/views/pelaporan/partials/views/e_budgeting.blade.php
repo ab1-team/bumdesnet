@@ -24,7 +24,7 @@
 
 <table width="100%">
     <thead>
-        <tr style="background: rgb(232, 232, 232); font-weight: bold; font-size: 12px; border: 1px solid black;">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; font-size: 12px; color: #fff; border: 1px solid black;">
             <th rowspan="2" width="20%" class="t l b">Rekening</th>
             <th rowspan="2" width="10%" class="t l b">Komulatif Bulan Lalu</th>
             @foreach ($bulan_tampil as $bt)
@@ -34,7 +34,7 @@
             @endforeach
             <th rowspan="2" width="10%" class="t l b">Total</th>
         </tr>
-        <tr style="background: rgb(232, 232, 232); font-weight: bold; font-size: 12px; border: 1px solid black;">
+        <tr style="background: rgb(74, 74, 74); font-weight: bold; font-size: 12px; color: #fff; border: 1px solid black;">
             <th width="6%" class="t l b">Rencana</th>
             <th width="6%" class="t l b">Realisasi</th>
             <th width="6%" class="t l b">Rencana</th>
@@ -77,3 +77,4 @@
         @endforeach
     </tbody>
 </table>
+

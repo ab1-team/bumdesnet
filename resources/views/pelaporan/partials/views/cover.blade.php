@@ -6,9 +6,14 @@
         font-family: Arial, Helvetica, sans-serif;
     }
 
+    html {
+        margin: 75.59px;
+        margin-left: 94.48px;
+    }
+
     body {
-        padding: 0;
-        margin: 0;
+        width: 100%;
+        height: fit-content;
         border: 1px solid #000;
         position: relative;
     }
@@ -25,6 +30,13 @@
         width: 100%;
         border-top: 1px solid #000;
     }
+
+    img {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>
 
 <body>
@@ -34,13 +46,9 @@
         <div style="margin: 0px; font-size: 24px;">{{ strtoupper($sub_judul) }}</div>
     </header>
 
-    <table width="100%" style="height: 50em;">
-        <tr>
-            <td align="center" valign="middle">
-                <img src="data:image/png;base64,{{ $logo }}" width="290" alt="Logo">
-            </td>
-        </tr>
-    </table>
+    <main>
+        <img src="data:image/png;base64,{{ $logo }}" width="290" alt="{{ $nama }}">
+    </main>
 
     <footer>
         <table width="100%">

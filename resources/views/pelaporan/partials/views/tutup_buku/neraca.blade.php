@@ -1,7 +1,7 @@
 @include('pelaporan.layouts.style')
 <title>{{ $title }} {{ $sub_judul }}</title>
 
-<table border="0" width="100%">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="3" align="center">
             <div style="font-size: 18px;">
@@ -13,22 +13,19 @@
         </td>
     </tr>
     <tr>
-        <td colspan="3" height="10"></td>
+        <td colspan="3" height="3"></td>
+    </tr>
+    <tr style="background: #000; color: #fff;">
+        <td width="10%">&nbsp;Kode</td>
+        <td width="70%">&nbsp;Nama Akun</td>
+        <td align="right" width="20%">&nbsp;Saldo</td>
+    </tr>
+    <tr>
+        <td colspan="3" height="1"></td>
     </tr>
 </table>
 
-<table border="0">
-    <thead>
-        <tr style="background: #c5c5c5; color: #000000;">
-            <td width="10%">Kode</td>
-            <td width="70%">Nama Akun</td>
-            <td align="right" width="20%">Saldo</td>
-        </tr>
-        <tr>
-            <td colspan="3" height="3"></td>
-        </tr>
-    </thead>
-
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     @php
         $jumlah_liabilitas_equitas = 0;
     @endphp
@@ -36,15 +33,15 @@
         @php
             $saldo_akun = 0;
         @endphp
-        <tr class="bold" style="background: rgb(104, 104, 104); color: #fff;">
-            <td style="height: 28px;" colspan="3" align="center">
-                {{ $lev1->kode_akun }}. {{ $lev1->nama_akun }}
+        <tr style="background: rgb(74, 74, 74); color: #fff; font-weight: bold;">
+            <td height="20" colspan="3" align="center">
+                <b>{{ $lev1->kode_akun }}. {{ $lev1->nama_akun }}</b>
             </td>
         </tr>
 
         @foreach ($lev1->akun2 as $lev2)
-            <tr class="bold" style="background: rgb(167, 167, 167);">
-                <td>{{ $lev2->kode_akun }}</td>
+            <tr style="background: rgb(167, 167, 167); font-weight: bold;">
+                <td>{{ $lev2->kode_akun }}.</td>
                 <td colspan="2">{{ $lev2->nama_akun }}</td>
             </tr>
 
@@ -77,7 +74,7 @@
                     }
                     $bg = 'rgb(230, 230, 230)';
                     if ($loop->iteration % 2 == 0) {
-                        $bg = 'rgba(255, 255, 255)';
+                        $bg = 'rgb(255, 255, 255)';
                     }
                 @endphp
                 <tr style="background-color: {{ $bg }}">
@@ -90,8 +87,8 @@
             @endforeach
         @endforeach
 
-        <tr class="bold" style="background: rgb(167, 167, 167);">
-            <td style="height: 28px;" colspan="2">Jumlah {{ $lev1->nama_akun }}</td>
+        <tr style="background: rgb(167, 167, 167); font-weight: bold;">
+            <td height="20" colspan="2">Jumlah {{ $lev1->nama_akun }}</td>
             <td align="right">
                 {{ $saldo_akun < 0 ? '(' . number_format(abs($saldo_akun), 2) . ')' : number_format($saldo_akun, 2) }}
             </td>
@@ -104,10 +101,10 @@
 
     <tr>
         <td colspan="3" style="padding: 0px !important;">
-            <table border="0">
-                <tr class="bold" style="background: rgb(167, 167, 167);">
-                    <td class="p-0" style="height: 28px;" width="80%" align="left">
-                        Jumlah Liabilitas + Ekuitas
+            <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
+                <tr style="background: rgb(167, 167, 167); font-weight: bold;">
+                    <td class="p-0" height="20" width="80%" align="left">
+                        &nbsp;Jumlah Liabilitas + Ekuitas
                     </td>
                     <td class="p-0" align="right" width="20%">
                         {{ $jumlah_liabilitas_equitas < 0 ? '(' . number_format(abs($jumlah_liabilitas_equitas), 2) . ')' : number_format($jumlah_liabilitas_equitas, 2) }}&nbsp;

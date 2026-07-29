@@ -14,7 +14,7 @@
         <div class="break"></div>
     @endif
 
-    <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 12px;">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
         <tr>
             <td colspan="3" align="center">
                 <div style="font-size: 18px; font-weight: bold;">
@@ -31,9 +31,9 @@
             </td>
         </tr>
     </table>
-    <table border="1" width="100%">
+    <table border="0" width="100%" cellspacing="0" cellpadding="0">
         <thead>
-            <tr style="background-color: rgb(230, 230, 230); font-weight: bold;">
+            <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
                 <th width="4%" class="t l b" rowspan="2">No</th>
                 <th width="21%" class="t l b" rowspan="2">Nama</th>
                 <th width="15%" class="t l b" rowspan="2">No. Induk</th>
@@ -41,7 +41,7 @@
                 <th width="10%" class="t l b" rowspan="2">Jumlah Tunggakan</th>
                 <th width="10%" class="t l b r" rowspan="2">keterangan</th>
             </tr>
-            <tr style="background: rgb(230, 230, 230); font-weight: bold;">
+            <tr style="background: rgb(74, 74, 74); font-weight: bold; color: #fff;">
                 <th width="10%" class="t l b">Sd.Bulan Lalu</th>
                 <th width="10%" class="t l b">Bulan Ini</th>
             </tr>
@@ -182,3 +182,5 @@
         </tbody>
     </table>
 @endforeach
+
+
