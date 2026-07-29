@@ -46,8 +46,13 @@ class PelaporanController extends Controller
             $base['margin-top'] = 30;
         }
 
-        return PDF::loadHTML(view($view, $data)->render())
-            ->setOptions(array_merge($base, $options))
+        $merged = array_merge($base, $options);
+        $orientation = $merged['orientation'] ?? 'portrait';
+
+        // setOptions first so margins land before HTML chrome inject
+        return PDF::setOptions($merged)
+            ->setPaper('a4', $orientation)
+            ->loadHTML(view($view, $data)->render())
             ->inline();
     }
 
@@ -501,7 +506,8 @@ class PelaporanController extends Controller
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
-        ])->setOrientation('landscape');
+            'orientation'    => 'landscape',
+        ]);
     }
 
     private function neraca(array $data)

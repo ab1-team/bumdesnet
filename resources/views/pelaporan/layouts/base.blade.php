@@ -24,11 +24,20 @@
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;
+            box-sizing: border-box;
         }
 
-        html {
-            margin: 75.59px;
-            margin-left: 94.48px;
+        /* Margins handled by CompatPdf @page inject (Snappy mm → DomPDF). */
+        body {
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        table {
+            word-wrap: break-word;
+            border-collapse: collapse;
+            width: 100%;
         }
 
         ul,
@@ -37,11 +46,12 @@
             page-break-inside: auto !important;
         }
 
-        header {
+        header.pdf-header {
             position: fixed;
-            top: -10px;
-            left: 0px;
-            right: 0px;
+            top: -18mm;
+            left: 0;
+            right: 0;
+            height: 16mm;
         }
 
         table tr th,
@@ -59,7 +69,27 @@
             padding: 0px !important;
         }
 
-        .break {
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+        tr.bold td {
+            font-weight: bold;
+        }
+
+        .row-white {
+            background-color: #ffffff;
+            color: #000;
+        }
+
+        .row-black {
+            background-color: #e0e0e0;
+            color: #000;
+        }
+
+        .break,
+        .page-break {
             page-break-after: always;
         }
 
@@ -86,12 +116,14 @@
 </head>
 
 <body>
-    <header>
+    <header class="pdf-header">
         @if ($laporan == 'surat_pengantar')
             <table width="100%" style="border-bottom: 1px double #000; border-width: 4px;">
                 <tr>
                     <td width="70">
-                        <img src="{{ $logo }}" height="70" alt="{{ $nama }}">
+                        @if ($logo)
+                            <img src="{{ $logo }}" height="70" alt="{{ $nama }}">
+                        @endif
                     </td>
                     <td align="center">
                         <div><b>{{ strtoupper($nama) }}</b></div>
@@ -114,7 +146,9 @@
             <table width="100%" style="border-bottom: 1px solid grey;">
                 <tr>
                     <td width="30">
-                        <img src="{{ $logo }}" width="40" alt="{{ $nama }}">
+                        @if ($logo)
+                            <img src="{{ $logo }}" width="40" alt="{{ $nama }}">
+                        @endif
                     </td>
                     <td>
                         <div style="font-size: 12px;"><b>{{ strtoupper($nama) }}</b></div>
@@ -124,7 +158,7 @@
                     </td>
                 </tr>
             </table>
-            <table width="100%" style="position: relative; top: -10px;">
+            <table width="100%">
                 <tr>
                     <td>
                         <span style="font-size: 8px; color: grey;">
@@ -141,17 +175,9 @@
         @endif
     </header>
 
-    @php
-        $style = 'position: relative; top: 60px; font-size: 12px; padding-bottom: 37.79px;';
-        if ($laporan == 'surat_pengantar') {
-            $style = 'margin-top: 95px; font-size: 12px; padding-bottom: 37.79px;';
-        }
-    @endphp
-
-    <main style="{{ $style }}">
+    <main>
         @yield('content')
     </main>
 </body>
 
 </html>
-
