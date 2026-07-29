@@ -27,7 +27,7 @@
             box-sizing: border-box;
         }
 
-        /* Margins handled by CompatPdf @page inject (Snappy mm → DomPDF). */
+        /* @page margins injected by CompatPdf (Snappy mm → DomPDF). */
         body {
             margin: 0;
             padding: 0;
@@ -46,12 +46,12 @@
             page-break-inside: auto !important;
         }
 
-        header.pdf-header {
+        /* Fixed header sits in top page margin (negative top). */
+        header {
             position: fixed;
-            top: -18mm;
+            top: -10px;
             left: 0;
             right: 0;
-            height: 16mm;
         }
 
         table tr th,
@@ -116,7 +116,7 @@
 </head>
 
 <body>
-    <header class="pdf-header">
+    <header>
         @if ($laporan == 'surat_pengantar')
             <table width="100%" style="border-bottom: 1px double #000; border-width: 4px;">
                 <tr>
@@ -158,7 +158,7 @@
                     </td>
                 </tr>
             </table>
-            <table width="100%">
+            <table width="100%" style="position: relative; top: -10px;">
                 <tr>
                     <td>
                         <span style="font-size: 8px; color: grey;">
@@ -175,7 +175,15 @@
         @endif
     </header>
 
-    <main>
+    @php
+        // Push content below fixed header (was removed — caused collision).
+        $style = 'position: relative; top: 60px; font-size: 12px; padding-bottom: 37.79px;';
+        if ($laporan == 'surat_pengantar') {
+            $style = 'margin-top: 95px; font-size: 12px; padding-bottom: 37.79px;';
+        }
+    @endphp
+
+    <main style="{{ $style }}">
         @yield('content')
     </main>
 </body>
