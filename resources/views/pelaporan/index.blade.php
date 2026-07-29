@@ -19,8 +19,7 @@
             </div>
         </div>
     </div>
-    <div>&nbsp;</div>
-    <form action="/pelaporan/preview" class="needs-validation" novalidate method="GET" id="FormPelaporan" target="_blank">
+    <form action="/pelaporan/preview" class="needs-validation mt-3" novalidate method="GET" id="FormPelaporan" target="_blank">
         @csrf
 
         <div class="tab-content">
@@ -101,7 +100,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div id="namaLaporan" class="col-md-6">
                                 <div class="position-relative mb-3">
                                     <label for="laporan">Nama Laporan</label>
                                     <select class="choices form-control" name="laporan" id="laporan">
@@ -215,6 +214,11 @@
                 $('#namaLaporan').addClass('col-md-12')
                 $('#subLaporan').removeClass('col-md-6')
                 $('#subLaporan').addClass('col-md-12')
+            } else {
+                $('#namaLaporan').removeClass('col-md-12')
+                $('#namaLaporan').addClass('col-md-6')
+                $('#subLaporan').removeClass('col-md-12')
+                $('#subLaporan').addClass('col-md-6')
             }
 
             $.get('/pelaporan/sub_laporan/' + file + '?tahun=' + tahun + '&bulan=' + bulan, function(result) {

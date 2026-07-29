@@ -22,7 +22,7 @@
 </table>
 
 <div style="width: 100%; text-align: right;">Kode Akun : {{ $kode_akun }}</div>
-<table border="0" width="100%" cellspacing="0" cellpadding="0">
+<table border="0" width="100%" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
     <thead>
         <tr style="background: rgb(94, 94, 94); font-weight: bold; color: #ffffff;">
             <th height="20" align="center" width="4%">No</th>
@@ -150,21 +150,27 @@
             </tr>
         @endif
 
-        <tr style="background: rgb(230, 230, 230); font-weight: bold;">
-            <td colspan="4">Total Transaksi</td>
-            <td align="right">{{ number_format($total_debit, 2) }}</td>
-            <td align="right">{{ number_format($total_kredit, 2) }}</td>
-            <td align="center" rowspan="3" colspan="2">{{ number_format($saldo_akun, 2) }}</td>
-        </tr>
-        <tr style="background: rgb(230, 230, 230); font-weight: bold;">
-            <td colspan="4">Total Transaksi sampai dengan </td>
-            <td align="right">{{ number_format($total_debit_sampai_dengan, 2) }}</td>
-            <td align="right">{{ number_format($total_kredit_sampai_dengan, 2) }}</td>
-        </tr>
-        <tr style="background: rgb(230, 230, 230); font-weight: bold;">
-            <td colspan="4">Total Transaksi Komulatif sampai dengan Tahun</td>
-            <td align="right">{{ number_format($total_komulatif_debit, 2) }}</td>
-            <td align="right">{{ number_format($total_komulatif_kredit, 2) }}</td>
+        <tr>
+            <td colspan="8" style="padding: 0 !important;">
+                <table border="0" width="100%" cellspacing="0" cellpadding="0" style="table-layout: fixed;">
+                    <tr style="background: rgb(230, 230, 230); font-weight: bold;">
+                        <td>Total Transaksi</td>
+                        <td align="right" width="13%">{{ number_format($total_debit, 2) }}</td>
+                        <td align="right" width="13%">{{ number_format($total_kredit, 2) }}</td>
+                        <td align="center" rowspan="3" width="18%">{{ number_format($saldo_akun, 2) }}</td>
+                    </tr>
+                    <tr style="background: rgb(230, 230, 230); font-weight: bold;">
+                        <td>Total Transaksi sampai dengan</td>
+                        <td align="right">{{ number_format($total_debit_sampai_dengan, 2) }}</td>
+                        <td align="right">{{ number_format($total_kredit_sampai_dengan, 2) }}</td>
+                    </tr>
+                    <tr style="background: rgb(230, 230, 230); font-weight: bold;">
+                        <td>Total Transaksi Komulatif sampai dengan Tahun</td>
+                        <td align="right">{{ number_format($total_komulatif_debit, 2) }}</td>
+                        <td align="right">{{ number_format($total_komulatif_kredit, 2) }}</td>
+                    </tr>
+                </table>
+            </td>
         </tr>
     </tbody>
 </table>

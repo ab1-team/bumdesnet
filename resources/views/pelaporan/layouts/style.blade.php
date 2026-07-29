@@ -2,12 +2,9 @@
     * {
         font-family: 'Arial', sans-serif;
         box-sizing: border-box;
-        margin: 0;
     }
 
-    table,
-    table td table {
-        table-layout: fixed;
+    table {
         word-wrap: break-word;
         border-collapse: collapse;
         page-break-inside: avoid;
