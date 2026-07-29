@@ -62,16 +62,13 @@
                             <tr class="bold">
                                 <td class="t l b" colspan="3" align="right">Jumlah</td>
                                 <td class="t l b" align="right">
-                                    {{ number_format($jumlah_menunggak_bulan_lalu, 2) }}
+                                    {{ number_format($jumlah_menunggak_bulan_lalu ?? 0, 2) }}
                                 </td>
                                 <td class="t l b" align="right">
-                                    {{ number_format($jumlah_menunggak_bulan_ini, 2) }}
+                                    {{ number_format($jumlah_menunggak_bulan_ini ?? 0, 2) }}
                                 </td>
                                 <td class="t l b" align="right">
-                                    {{ number_format($jumlah_tunggakan, 2) }}
-                                </td>
-                                <td class="t l b" align="right">
-                                    {{ number_format($jumlah_bayar, 2) }}
+                                    {{ number_format($jumlah_tunggakan ?? 0, 2) }}
                                 </td>
                                 <td class="t l b r"></td>
                             </tr>
@@ -79,7 +76,7 @@
 
                         <tr class="bold">
                             <td class="t l b r" colspan="7" height="25">
-                                Desa {{ $ins->village->nama }} Dusun {{ $ins->village->dusun }}
+                                Desa {{ optional($ins->village)->nama }} Dusun {{ optional($ins->village)->dusun }}
                             </td>
                         </tr>
 
@@ -97,7 +94,7 @@
                     @endif
 
                     @php
-                        $tgl_toleransi = $ins->settings->tanggal_toleransi;
+                        $tgl_toleransi = $ins->settings->tanggal_toleransi ?? 0;
 
                         $bayar = 0;
                         $sampai_bulan_lalu = 0;
@@ -140,7 +137,7 @@
 
                     <tr>
                         <td class="t l b" align="center">{{ $nomor++ }}</td>
-                        <td class="t l b">{{ $ins->customer->nama }}</td>
+                        <td class="t l b">{{ optional($ins->customer)->nama }}</td>
                         <td class="t l b">{{ $ins->kode_instalasi }}</td>
                         <td class="t l b" align="right">
                             {{ number_format($sd_bulan_lalu, 2) }}

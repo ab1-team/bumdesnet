@@ -1,6 +1,6 @@
 @php
     if ($type == 'excel') {
-        $nama_file = ucwords(str_replace('_', ' ', $laporan)) . ' (' . ucwords($tgl) . ')';
+        $nama_file = ucwords(str_replace('_', ' ', $laporan ?? '')) . ' (' . ucwords($tgl ?? '') . ')';
 
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment; filename="' . $nama_file . '.xls"');
@@ -22,7 +22,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ ucwords(str_replace('_', ' ', $laporan)) }} ({{ ucwords($tgl) }})</title>
+    <title>{{ ucwords(str_replace('_', ' ', $laporan ?? '')) }} ({{ ucwords($tgl ?? '') }})</title>
     <style>
         * {
             font-family: Arial, Helvetica, sans-serif;

@@ -69,7 +69,7 @@
             <br>
             <br>
             <div>
-                <b>{{ $direktur->nama }}</b>
+                <b>{{ $direktur->nama ?? '-' }}</b>
             </div>
         </td>
     </tr>

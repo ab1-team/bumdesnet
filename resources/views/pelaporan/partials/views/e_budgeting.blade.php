@@ -31,7 +31,7 @@
                     {{ Tanggal::namaBulan(date('Y') . '-' . $bt . '-01') }}
                 </th>
             @endforeach
-            <th rowspan="2" width="10%" class="t l b">Total</th>
+            <th rowspan="2" width="10%" class="t l b r">Total</th>
         </tr>
         <tr style="background: rgb(74, 74, 74); font-weight: bold; font-size: 12px; color: #fff; border: 1px solid black;">
             <th width="6%" class="t l b">Rencana</th>

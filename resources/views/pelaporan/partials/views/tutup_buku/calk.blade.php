@@ -63,7 +63,7 @@
         <p style="text-align: justify">
             {{ $nama }} didirikan di {{ $alamat }} berdasarkan PERATURAN BERSAMA
             KEPALA DESA
-            NOMOR $peraturan_desa dan mendapatkan Sertifikat Badan Hukum dari Menteri Hukum dan Hak
+            NOMOR {{ $peraturan_desa ?? ($nomor_usaha ?? '-') }} dan mendapatkan Sertifikat Badan Hukum dari Menteri Hukum dan Hak
             Asasi Manusia
             No. {{ $nomor_usaha }} . {{ $nama }}
             menjalankan usaha
@@ -261,10 +261,12 @@
                 </tbody>
             </table>
         </div>
+        @if (!empty($selisih_neraca) && abs($selisih_neraca) > 0)
         <div style="color: #f44335">
             Ada selisih antara Jumlah Aset dan Jumlah Liabilitas + Ekuitas sebesar
-            <b></b>
+            <b>{{ number_format($selisih_neraca, 2) }}</b>
         </div>
+        @endif
     </li>
     <li style="margin-top: 12px;">
         <div style="text-transform: uppercase;">
@@ -387,7 +389,7 @@
             dimaksud Bumdes yang dimaksud dalam Keputusan Kementerian Desa adalah meliputi Bumdes, Bumdesma
             dan Bumdesma Lkd. Catatan atas Laporan Keuangan (CaLK) ini merupakan bagian tidak terpisahkan
             dari Laporan Keuangan Badan Usaha Milik Desa Bersama {{ $nama }} untuk
-            Laporan Operasi $nama_tgl . Selanjutnya Catatan atas Laporan Keuangan ini diharapkan
+            Laporan Operasi {{ $nama_tgl ?? ($sub_judul ?? '') }}. Selanjutnya Catatan atas Laporan Keuangan ini diharapkan
             untuk dapat berguna bagi pihak-pihak yang berkepentingan (stakeholders) serta memenuhi
             prinsip-prinsip transparansi, akuntabilitas, pertanggungjawaban, independensi, dan fairness
             dalam pengelolaan keuangan {{ $nama }} .

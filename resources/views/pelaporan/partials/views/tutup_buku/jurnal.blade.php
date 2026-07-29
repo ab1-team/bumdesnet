@@ -43,15 +43,15 @@
                 <td height="15" rowspan="2" align="center">{{ $loop->iteration }}.</td>
                 <td rowspan="2" align="center">{{ Tanggal::tglIndo($transaction->tgl_transaksi) }}</td>
                 <td rowspan="2" align="left">{{ $transaction->id }}</td>
-                <td align="center">{{ $transaction->acc_debit->kode_akun }}</td>
-                <td align="left">{{ $transaction->acc_debit->nama_akun }}</td>
+                <td align="center">{{ optional($transaction->acc_debit)->kode_akun }}</td>
+                <td align="left">{{ optional($transaction->acc_debit)->nama_akun }}</td>
                 <td align="right">{{ number_format($transaction->total, 2, ',', '.') }}</td>
                 <td align="right">0</td>
                 <td rowspan="2" align="center">&nbsp;</td>
             </tr>
             <tr class="{{ $rowClass }}">
-                <td align="center">{{ $transaction->acc_kredit->kode_akun }}</td>
-                <td align="left">{{ $transaction->acc_kredit->nama_akun }}</td>
+                <td align="center">{{ optional($transaction->acc_kredit)->kode_akun }}</td>
+                <td align="left">{{ optional($transaction->acc_kredit)->nama_akun }}</td>
                 <td align="right">0</td>
                 <td align="right">{{ number_format($transaction->total, 2, ',', '.') }}</td>
             </tr>

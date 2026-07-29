@@ -6,7 +6,8 @@
 @section('content')
 @foreach ($caters as $cater)
     @php
-        $filterInstalasi = $cater->installations->filter(fn($ins) => $ins->usage->count() > 0);
+        // daftar pelanggan = all installations, not filtered by usage
+        $filterInstalasi = $cater->installations;
         if ($filterInstalasi->isEmpty()) {
             continue;
         }
@@ -58,7 +59,7 @@
                 @if (!in_array($ins->desa, $data_desa))
                     <tr class="bold">
                         <td class="t l b r" colspan="8" height="25">
-                            Desa {{ $ins->village->nama }} Dusun {{ $ins->village->dusun }}
+                            Desa {{ optional($ins->village)->nama }} Dusun {{ optional($ins->village)->dusun }}
                         </td>
                     </tr>
 
@@ -73,13 +74,13 @@
                 <tr>
                     <td class="t l b" align="center">{{ $nomor++ }}</td>
                     <td class="t l b" align="center">
-                        {{ $ins->kode_instalasi }}.{{ substr($ins->package->kelas, 0, 1) }}
+                        {{ $ins->kode_instalasi }}.{{ substr(optional($ins->package)->kelas ?? '', 0, 1) }}
                     </td>
                     <td class="t l b" align="center">{{ Tanggal::tglIndo($ins->pasang) }}</td>
-                    <td class="t l b">{{ $ins->customer->nama }}</td>
-                    <td class="t l b" align="center">{{ $ins->customer->nik }}</td>
-                    <td class="t l b">{{ $ins->customer->alamat }}</td>
-                    <td class="t l b" align="center">{{ $ins->customer->hp }}</td>
+                    <td class="t l b">{{ optional($ins->customer)->nama }}</td>
+                    <td class="t l b" align="center">{{ optional($ins->customer)->nik }}</td>
+                    <td class="t l b">{{ optional($ins->customer)->alamat }}</td>
+                    <td class="t l b" align="center">{{ optional($ins->customer)->hp }}</td>
                     <td class="t l b r" align="center">
                         @if ($ins->status == 'R' || $ins->status == '0')
                             Permohonan
@@ -96,7 +97,7 @@
                 </tr>
             @empty
                 <tr>
-                    <td colspan="7" align="center" class="t l b r">
+                    <td colspan="8" align="center" class="t l b r">
                         Tidak ada data pelanggan.
                     </td>
                 </tr>

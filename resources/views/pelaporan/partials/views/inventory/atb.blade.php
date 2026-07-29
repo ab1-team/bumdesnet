@@ -158,7 +158,7 @@
                     {{ $akum_susut < 0 ? '(' . number_format(abs($akum_susut), 2) . ')' : number_format($akum_susut, 2) }}
                 </td>
                 <td class="t l b r" align="right">
-                    {{ $akum_susut < 0 ? '(' . number_format(abs($akum_susut), 2) . ')' : number_format($akum_susut, 2) }}
+                    {{ $nilai_buku < 0 ? '(' . number_format(abs($nilai_buku), 2) . ')' : number_format($nilai_buku, 2) }}
                 </td>
             </tr>
         @endforeach

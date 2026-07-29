@@ -47,7 +47,9 @@
     </header>
 
     <main>
-        <img src="{{ $logo }}" width="290" alt="{{ $nama }}">
+        @if ($logo)
+            <img src="{{ $logo }}" width="290" alt="{{ $nama }}">
+        @endif
     </main>
 
     <footer>

@@ -83,7 +83,7 @@
 
                     <tr class="bold">
                         <td class="t l b r" colspan="9" height="25">
-                            Desa {{ $ins->village->nama }} Dusun {{ $ins->village->dusun }}
+                            Desa {{ optional($ins->village)->nama }} Dusun {{ optional($ins->village)->dusun }}
                         </td>
                     </tr>
 
@@ -100,7 +100,7 @@
                 @endif
 
                 @php
-                    $tgl_toleransi = $ins->settings->tanggal_toleransi;
+                    $tgl_toleransi = $ins->settings->tanggal_toleransi ?? 0;
 
                     $bayar = 0;
                     $bulan_lalu = 0;
@@ -114,7 +114,7 @@
 
                         $tagihan = $usage->nominal + $ins->abodemen;
                         if ($usage->tgl_akhir < $toleransi) {
-                            $tagihan += $ins->package->denda;
+                            $tagihan += optional($ins->package)->denda ?? 0;
                         }
 
                         if ($bulan_tagihan < $bulan_kondisi) {
@@ -147,7 +147,7 @@
 
                 <tr>
                     <td class="t l b" align="center">{{ $nomor++ }}</td>
-                    <td class="t l b">{{ $ins->customer->nama }}</td>
+                    <td class="t l b">{{ optional($ins->customer)->nama }}</td>
                     <td class="t l b">{{ $ins->kode_instalasi }}</td>
                     <td class="t l b" align="center">{{ Tanggal::tglIndo($ins->aktif) }}</td>
                     <td class="t l b" align="right">

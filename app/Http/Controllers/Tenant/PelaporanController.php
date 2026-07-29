@@ -128,7 +128,7 @@ class PelaporanController extends Controller
                 ],
                 4 => [
                     'title' => 'CALK',
-                    'value' => 'CALK_tutup_buku'
+                    'value' => 'calk_tutup_buku'
                 ]
             ];
         }
@@ -259,16 +259,21 @@ class PelaporanController extends Controller
             $data['cater'] = $request->get('sub_laporan');
         }
 
-        $logoPath = public_path('storage/logo/' . $busines->logo);
+        $logoPath = public_path('storage/logo/' . ($busines->logo ?? ''));
         $data['logo'] = (is_file($logoPath) ? 'file:///' . str_replace('\\', '/', $logoPath) : null);
 
-        $data['nomor_usaha'] = 'SK Kemenkumham RI No.' . $busines->nomor_bh;
-        $data['info'] = $busines->alamat . ', Telp.' . $busines->telpon;
-        $data['email'] = $busines->email;
-        $data['nama'] = $busines->nama;
-        $data['alamat'] = $busines->alamat;
-        $data['jabatan'] = $direktur->positions;
+        $data['nomor_usaha'] = 'SK Kemenkumham RI No.' . ($busines->nomor_bh ?? '-');
+        $data['info'] = ($busines->alamat ?? '-') . ', Telp.' . ($busines->telpon ?? '-');
+        $data['email'] = $busines->email ?? '';
+        $data['nama'] = $busines->nama ?? '';
+        $data['alamat'] = $busines->alamat ?? '';
+        // relation is position() not positions — typo left null jabatan on surat
+        $data['jabatan'] = $direktur?->position;
         $data['direktur'] = $direktur;
+
+        if (! method_exists($this, $laporan)) {
+            abort(404, "Laporan [{$laporan}] tidak ditemukan");
+        }
 
         return $this->$laporan($data);
     }
@@ -322,8 +327,8 @@ class PelaporanController extends Controller
             $data['tgl'] = Tanggal::tahun($tgl);
         }
 
-        $data['nama_desa'] = $villages->nama;
-        $data['alamat_desa'] = $villages->alamat;
+        $data['nama_desa'] = $villages->nama ?? '-';
+        $data['alamat_desa'] = $villages->alamat ?? '-';
 
         $data['title'] = 'Surat Pengantar';
         return $this->renderPdf('pelaporan.partials.views.surat_pengantar', $data, [
@@ -443,6 +448,10 @@ class PelaporanController extends Controller
             ['business_id', Session::get('business_id')],
             ['kode_akun', $data['kode_akun']]
         ])->first();
+
+        if (! $data['account']) {
+            abort(404, 'Akun buku besar tidak ditemukan');
+        }
 
         $data['saldo_awal_tahun'] = Amount::where([
             ['tahun', $data['tahun']],
@@ -911,6 +920,7 @@ class PelaporanController extends Controller
         }
 
         $akun_piutang = Account::where('business_id', Session::get('business_id'))->where('kode_akun', '1.1.03.01')->first();
+        $akun_piutang_id = $akun_piutang->id ?? 0;
 
         $data['cater_id'] = $data['sub_laporan'];
         $caters = User::where([
@@ -929,10 +939,10 @@ class PelaporanController extends Controller
                     $query->where('tgl_akhir', '<=', $data['tgl_kondisi'])->where('status', 'UNPAID');
                 })->orderBy('tgl_akhir')->orderBy('id');
             },
-            'installations.usage.transaction' => function ($query) use ($data, $akun_piutang) {
+            'installations.usage.transaction' => function ($query) use ($data, $akun_piutang_id) {
                 $query->where([
                     ['tgl_transaksi', '<=', $data['tgl_kondisi']],
-                    ['rekening_debit', '!=', $akun_piutang->id]
+                    ['rekening_debit', '!=', $akun_piutang_id]
                 ]);
             },
         ]);
@@ -1113,14 +1123,17 @@ class PelaporanController extends Controller
         $data['judul'] = 'Laporan Keuangan';
         $data['sub_judul'] = 'Tahun ' . Tanggal::tahun($tgl);
         $data['tgl'] = Tanggal::tahun($tgl);
+        $data['thn'] = Tanggal::tahun($tgl); // view always needs $thn
 
         if ($data['bulanan']) {
             $data['sub_judul'] = 'Bulan ' . Tanggal::namaBulan($tgl) . ' ' . Tanggal::tahun($tgl);
             $data['tgl'] = Tanggal::namaBulan($tgl) . ' ' . Tanggal::tahun($tgl);
-            $data['thn'] = Tanggal::tahun($tgl);
         }
 
-        $list_bulan = explode(',', $data['sub_laporan']);
+        $list_bulan = explode(',', (string) ($data['sub_laporan'] ?? ''));
+        if (count($list_bulan) < 3) {
+            abort(404, 'Sub laporan e-budgeting (triwulan) wajib dipilih');
+        }
         $bulan1 = $list_bulan[0];
         $bulan2 = $list_bulan[1];
         $bulan3 = $list_bulan[2];
@@ -1362,6 +1375,7 @@ class PelaporanController extends Controller
 
         $tgl = $thn . '-' . $bln . '-' . $hari;
         $data['sub_judul'] = 'Awal Tahun ' . Tanggal::tahun($tgl);
+        $data['tgl'] = $data['sub_judul']; // base layout title needs $tgl
 
         $data['akun1'] = AkunLevel1::where('lev1', '<=', '3')->with([
             'akun2',
