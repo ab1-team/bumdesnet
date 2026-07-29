@@ -17,7 +17,7 @@
     </tr>
 </table>
 
-<table border="0">
+<table border="0" width="100%">
     <thead>
         <tr style="background: #c4c4c4; color: #000000;">
             <td width="10%">Kode</td>
@@ -104,7 +104,7 @@
 
     <tr>
         <td colspan="3" style="padding: 0px !important;">
-            <table border="0">
+            <table border="0" width="100%">
                 <tr class="bold" style="background: rgb(167, 167, 167);">
                     <td class="p-0" style="height: 28px;" width="80%" align="left">
                         Jumlah Liabilitas + Ekuitas
