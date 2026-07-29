@@ -11,6 +11,8 @@
         header('Cache-Control: cache, must-revalidate');
         header('Pragma: public');
     }
+
+    $isSurat = ($laporan ?? '') === 'surat_pengantar';
 @endphp
 
 <!DOCTYPE html>
@@ -27,7 +29,7 @@
             box-sizing: border-box;
         }
 
-        /* @page margins injected by CompatPdf (Snappy mm → DomPDF). */
+        /* @page margins from CompatPdf (20mm / 30mm surat). */
         body {
             margin: 0;
             padding: 0;
@@ -46,12 +48,20 @@
             page-break-inside: auto !important;
         }
 
-        /* Fixed header sits in top page margin (negative top). */
+        /*
+         * Fixed header lives in the top @page margin.
+         * top ≈ -margin-top so letterhead sits near page edge, not mid-margin.
+         * normal margin-top 20mm; surat 30mm (see PelaporanController).
+         */
         header {
             position: fixed;
-            top: -10px;
             left: 0;
             right: 0;
+            top: -18mm;
+        }
+
+        header.header-surat {
+            top: -28mm;
         }
 
         table tr th,
@@ -116,8 +126,8 @@
 </head>
 
 <body>
-    <header>
-        @if ($laporan == 'surat_pengantar')
+    <header class="{{ $isSurat ? 'header-surat' : '' }}">
+        @if ($isSurat)
             <table width="100%" style="border-bottom: 1px double #000; border-width: 4px;">
                 <tr>
                     <td width="70">
@@ -175,15 +185,8 @@
         @endif
     </header>
 
-    @php
-        // Push content below fixed header (was removed — caused collision).
-        $style = 'position: relative; top: 60px; font-size: 12px; padding-bottom: 37.79px;';
-        if ($laporan == 'surat_pengantar') {
-            $style = 'margin-top: 95px; font-size: 12px; padding-bottom: 37.79px;';
-        }
-    @endphp
-
-    <main style="{{ $style }}">
+    {{-- Header is in the margin box; small gap only if it slightly overflows. --}}
+    <main style="font-size: 12px; padding-bottom: 37.79px; {{ $isSurat ? 'padding-top: 8px;' : 'padding-top: 4px;' }}">
         @yield('content')
     </main>
 </body>
