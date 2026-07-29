@@ -20,7 +20,7 @@
 <table border="0">
     <thead>
         <tr style="background: #c4c4c4; color: #000000;">
-            <td width="12%">Kode</td>
+            <td width="13%">Kodee</td>
             <td width="68%">Nama Akun</td>
             <td align="right" width="20%">Saldo</td>
         </tr>
