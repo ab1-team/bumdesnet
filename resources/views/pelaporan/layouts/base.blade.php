@@ -91,7 +91,7 @@
             <table width="100%" style="border-bottom: 1px double #000; border-width: 4px;">
                 <tr>
                     <td width="70">
-                        <img src="data:image/png;base64,{{ $logo }}" height="70" alt="{{ $nama }}">
+                        <img src="{{ $logo }}" height="70" alt="{{ $nama }}">
                     </td>
                     <td align="center">
                         <div><b>{{ strtoupper($nama) }}</b></div>
@@ -114,7 +114,7 @@
             <table width="100%" style="border-bottom: 1px solid grey;">
                 <tr>
                     <td width="30">
-                        <img src="data:image/png;base64,{{ $logo }}" width="40" alt="{{ $nama }}">
+                        <img src="{{ $logo }}" width="40" alt="{{ $nama }}">
                     </td>
                     <td>
                         <div style="font-size: 12px;"><b>{{ strtoupper($nama) }}</b></div>
@@ -154,3 +154,4 @@
 </body>
 
 </html>
+

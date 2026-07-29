@@ -47,7 +47,7 @@
     </header>
 
     <main>
-        <img src="data:image/png;base64,{{ $logo }}" width="290" alt="{{ $nama }}">
+        <img src="{{ $logo }}" width="290" alt="{{ $nama }}">
     </main>
 
     <footer>
@@ -75,3 +75,4 @@
         </table>
     </footer>
 </body>
+

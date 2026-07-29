@@ -223,13 +223,15 @@ class PelaporanController extends Controller
         $laporan = $request->get('laporan');
         if ($laporan == 'tutup_buku') {
             $laporan = $request->get('sub_laporan');
+            $data['laporan'] = $laporan;
         }
 
         if ($laporan == 'daftar_pelanggan' || $laporan == 'piutang_pelanggan' || $laporan == 'tagihan_pelanggan') {
             $data['cater'] = $request->get('sub_laporan');
         }
 
-        $data['logo'] = base64_encode(file_get_contents(public_path('storage/logo/' . $busines->logo)));
+        $logoPath = public_path('storage/logo/' . $busines->logo);
+        $data['logo'] = (is_file($logoPath) ? 'file:///' . str_replace('\\', '/', $logoPath) : null);
 
         $data['nomor_usaha'] = 'SK Kemenkumham RI No.' . $busines->nomor_bh;
         $data['info'] = $busines->alamat . ', Telp.' . $busines->telpon;
