@@ -1,12 +1,8 @@
-<title>{{ $title }} {{ $sub_judul }}</title>
-<style>
-    * {
-        font-family: 'Arial', sans-serif;
-        line-height: 1.5;
-    }
-</style>
+@extends('pelaporan.layouts.base')
 
-<table border="0"style="font-size: 12px;">
+@section('content')
+
+<table border="0" style="font-size: 12px; line-height: 1.5;">
     <tr>
         <td width="5%">Nomor</td>
         <td width="50%">: ______________________</td>
@@ -88,3 +84,4 @@
         </td>
     </tr>
 </table>
+@endsection

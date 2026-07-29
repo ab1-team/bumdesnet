@@ -30,6 +30,27 @@ use App\Models\Tenant\Product;
 class PelaporanController extends Controller
 {
 
+    private function renderPdf(string $view, array $data, array $options = [])
+    {
+        $data['laporan'] = $data['laporan'] ?? $data['type'] ?? '';
+
+        $base = [
+            'margin-top'     => 20,
+            'margin-bottom'  => 15,
+            'margin-left'    => 25,
+            'margin-right'   => 20,
+            'enable-local-file-access' => true,
+        ];
+
+        if (($data['laporan'] ?? '') === 'surat_pengantar') {
+            $base['margin-top'] = 30;
+        }
+
+        return PDF::loadHTML(view($view, $data)->render())
+            ->setOptions(array_merge($base, $options))
+            ->inline();
+    }
+
     public function index()
     {
         $busines = Business::where('id', Session::get('business_id'))->first();
@@ -224,6 +245,9 @@ class PelaporanController extends Controller
         if ($laporan == 'tutup_buku') {
             $laporan = $request->get('sub_laporan');
             $data['laporan'] = $laporan;
+            if (empty($laporan)) {
+                abort(404);
+            }
         }
 
         if ($laporan == 'daftar_pelanggan' || $laporan == 'piutang_pelanggan' || $laporan == 'tagihan_pelanggan') {
@@ -260,15 +284,12 @@ class PelaporanController extends Controller
         }
 
         $data['title'] = 'Cover';
-        $view = view('pelaporan.partials.views.cover', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'margin-top'    => 20,
+        return $this->renderPdf('pelaporan.partials.views.cover', $data, [
+            'margin-top' => 20,
             'margin-bottom' => 20,
-            'margin-left'   => 25,
-            'margin-right'  => 20,
-            'enable-local-file-access' => true,
+            'margin-left' => 25,
+            'margin-right' => 20,
         ]);
-        return $pdf->inline();
     }
 
     private function surat_pengantar(array $data)
@@ -300,17 +321,13 @@ class PelaporanController extends Controller
         $data['alamat_desa'] = $villages->alamat;
 
         $data['title'] = 'Surat Pengantar';
-        $view = view('pelaporan.partials.views.surat_pengantar', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'    => 30,
+        return $this->renderPdf('pelaporan.partials.views.surat_pengantar', $data, [
+            'margin-top' => 30,
             'margin-bottom' => 20,
-            'margin-left'   => 25,
-            'margin-right'  => 20,
-            'enable-local-file-access' => true,
+            'margin-left' => 25,
+            'margin-right' => 20
         ]);
-        return $pdf->inline();
+    
     }
 
     private function jurnal_transaksi(array $data)
@@ -391,18 +408,14 @@ class PelaporanController extends Controller
         }
 
         $data['title'] = 'Jurnal Transaksi';
-        $view = view('pelaporan.partials.views.jurnal_transaksi', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.jurnal_transaksi', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function buku_besar(array $data)
@@ -446,18 +459,14 @@ class PelaporanController extends Controller
         })->get();
 
         $data['title'] = 'Buku Besar';
-        $view = view('pelaporan.partials.views.buku_besar', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.buku_besar', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function neraca_saldo(array $data)
@@ -485,10 +494,7 @@ class PelaporanController extends Controller
         ])->get();
 
         $data['title'] = 'Neraca Saldo';
-        $view = view('pelaporan.partials.views.neraca_saldo', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.neraca_saldo', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -496,7 +502,6 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
         ])->setOrientation('landscape');
-        return $pdf->inline();
     }
 
     private function neraca(array $data)
@@ -523,7 +528,7 @@ class PelaporanController extends Controller
                 $query->where('tahun', $data['tahun'])->where(function ($query) use ($data) {
                     $query->where('bulan', '0')->orwhere('bulan', $data['bulan']);
                 });
-            },
+            }
         ])->orderBy('kode_akun', 'ASC')->get();
 
         $laba_rugi = Account::where('business_id', Session::get('business_id'))->where('lev1', '>=', '4')->with([
@@ -531,7 +536,7 @@ class PelaporanController extends Controller
                 $query->where('tahun', $data['tahun'])->where(function ($query) use ($data) {
                     $query->where('bulan', '0')->orwhere('bulan', $data['bulan']);
                 });
-            },
+            }
         ])->get();
 
         $pendapatan = 0;
@@ -550,18 +555,14 @@ class PelaporanController extends Controller
         $data['surplus'] = $pendapatan - $beban;
 
         $data['title'] = 'Neraca';
-        $view = view('pelaporan.partials.views.neraca', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.neraca', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function laba_rugi(array $data)
@@ -690,18 +691,14 @@ class PelaporanController extends Controller
         ])->orderBy('kode_akun', 'ASC')->get();
 
         $data['title'] = 'Laba Rugi';
-        $view = view('pelaporan.partials.views.laba_rugi', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.laba_rugi', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function arus_kas(array $data)
@@ -738,22 +735,18 @@ class PelaporanController extends Controller
                 $query->whereBetween('tgl_transaksi', [$data['tgl_awal'], $data['tgl_kondisi']])->where(function ($query) use ($data) {
                     $query->whereIn('rekening_debit', $data['akun_kas']);
                 });
-            },
+            }
         ])->get();
 
         $data['title'] = 'Arus Kas';
-        $view = view('pelaporan.partials.views.arus_kas', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.arus_kas', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function LPM(array $data)
@@ -779,18 +772,14 @@ class PelaporanController extends Controller
         ])->get();
 
         $data['title'] = 'Laporan Perubahan Modal';
-        $view = view('pelaporan.partials.views.laporan_perubahan_modal', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.laporan_perubahan_modal', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function calkk(array $data)
@@ -817,7 +806,7 @@ class PelaporanController extends Controller
                 $query->where('tahun', $data['tahun'])->where(function ($query) use ($data) {
                     $query->where('bulan', '0')->orwhere('bulan', $data['bulan']);
                 });
-            },
+            }
         ])->orderBy('kode_akun', 'ASC')->get();
 
         $laba_rugi = Account::where('business_id', Session::get('business_id'))->where('lev1', '>=', '4')->with([
@@ -825,7 +814,7 @@ class PelaporanController extends Controller
                 $query->where('tahun', $data['tahun'])->where(function ($query) use ($data) {
                     $query->where('bulan', '0')->orwhere('bulan', $data['bulan']);
                 });
-            },
+            }
         ])->get();
 
         $pendapatan = 0;
@@ -844,18 +833,14 @@ class PelaporanController extends Controller
         $data['surplus'] = $pendapatan - $beban;
 
         $data['title'] = 'Catatan Atas Laporan Keuangan';
-        $view = view('pelaporan.partials.views.calk', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.calk', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     private function daftar_pelanggan(array $data)
@@ -892,10 +877,7 @@ class PelaporanController extends Controller
         $data['caters'] = $caters->get();
 
         $data['title'] = 'Daftar Pelanggan';
-        $view = view('pelaporan.partials.views.daftar_pelanggan', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.daftar_pelanggan', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -904,7 +886,6 @@ class PelaporanController extends Controller
             'header-spacing' => 2,
             'orientation' => 'landscape',
         ]);
-        return $pdf->inline();
     }
 
     private function tagihan_pelanggan(array $data)
@@ -956,10 +937,7 @@ class PelaporanController extends Controller
         $data['caters'] = $caters->get();
 
         $data['title'] = 'Daftar Tagihan Pelanggan';
-        $view = view('pelaporan.partials.views.tagihan_pelanggan', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tagihan_pelanggan', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -967,8 +945,8 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
             'orientation' => 'landscape',
+        
         ]);
-        return $pdf->inline();
     }
 
     private function piutang_pelanggan(array $data)
@@ -1020,10 +998,7 @@ class PelaporanController extends Controller
         }
         $data['caters'] = $caters->get();
         $data['title'] = 'Daftar Piutang Pelanggan';
-        $view = view('pelaporan.partials.views.piutang_pelanggan', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.piutang_pelanggan', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -1031,8 +1006,8 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
             'orientation' => 'landscape',
+        
         ]);
-        return $pdf->inline();
     }
 
     private function ati(array $data)
@@ -1062,10 +1037,7 @@ class PelaporanController extends Controller
         ])->get();
 
         $data['title'] = 'Aset Tetap Dan Inventaris';
-        $view = view('pelaporan.partials.views.aset_tetap', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.aset_tetap', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -1073,8 +1045,8 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
             'orientation' => 'landscape',
+        
         ]);
-        return $pdf->inline();
     }
 
     private function atb(array $data)
@@ -1105,10 +1077,7 @@ class PelaporanController extends Controller
         ])->get();
 
         $data['title'] = 'Aset Tak Berwujud';
-        $view = view('pelaporan.partials.views.aset_tak_berwujud', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.aset_tak_berwujud', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -1116,8 +1085,8 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
             'orientation' => 'landscape',
+        
         ]);
-        return $pdf->inline();
     }
 
     private function e_budgeting(array $data)
@@ -1296,11 +1265,7 @@ class PelaporanController extends Controller
 
         $data['e_budgeting'] = $data_e_budgeting;
         $data['title'] = 'E - Budgeting';
-
-        $view = view('pelaporan.partials.views.e_budgeting', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.e_budgeting', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
@@ -1308,8 +1273,8 @@ class PelaporanController extends Controller
             'enable-local-file-access' => true,
             'header-spacing' => 2,
             'orientation' => 'landscape',
+        
         ]);
-        return $pdf->inline();
     }
 
     private function alokasi_laba(array $data)
@@ -1334,18 +1299,15 @@ class PelaporanController extends Controller
         ])->get();
 
         $data['title'] = 'Alokasi Laba';
-        $view = view('pelaporan.partials.views.tutup_buku.alokasi_laba', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tutup_buku.alokasi_laba', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
+        
         ]);
-        return $pdf->inline();
     }
 
     private function jurnal_tutup_buku(array $data)
@@ -1374,18 +1336,15 @@ class PelaporanController extends Controller
             ])->get();
 
         $data['title'] = 'Jurnal Tutup Buku';
-        $view = view('pelaporan.partials.views.tutup_buku.jurnal', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tutup_buku.jurnal', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
+        
         ]);
-        return $pdf->inline();
     }
 
     private function neraca_tutup_buku(array $data)
@@ -1435,18 +1394,15 @@ class PelaporanController extends Controller
         $data['surplus'] = $pendapatan - $beban;
 
         $data['title'] = 'Neraca Awal Tahun';
-        $view = view('pelaporan.partials.views.tutup_buku.neraca', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tutup_buku.neraca', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
+        
         ]);
-        return $pdf->inline();
     }
 
     private function laba_rugi_tutup_buku(array $data)
@@ -1581,18 +1537,15 @@ class PelaporanController extends Controller
 
         $data['title'] = 'Laba Rugi Awal Tahun';
         $data['sub_judul'] = 'Awal Tahun ' . $thn;
-        $view = view('pelaporan.partials.views.tutup_buku.laba_rugi', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tutup_buku.laba_rugi', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
+        
         ]);
-        return $pdf->inline();
     }
 
     private function calk_tutup_buku(array $data)
@@ -1646,18 +1599,15 @@ class PelaporanController extends Controller
         $data['surplus'] = $pendapatan - $beban;
 
         $data['title'] = 'Calk';
-        $view = view('pelaporan.partials.views.tutup_buku.calk', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
+        return $this->renderPdf('pelaporan.partials.views.tutup_buku.calk', $data, [
             'margin-top'     => 20,
             'margin-bottom'  => 15,
             'margin-left'    => 25,
             'margin-right'   => 20,
             'enable-local-file-access' => true,
             'header-spacing' => 2,
+        
         ]);
-        return $pdf->inline();
     }
 
     private function persediaan(array $data)
@@ -1672,18 +1622,14 @@ class PelaporanController extends Controller
         $data['sub_judul'] = 'Bulan ' . Tanggal::namaBulan($tgl) . ' ' . Tanggal::tahun($tgl);
 
         $data['title'] = 'Daftar Persediaan';
-        $view = view('pelaporan.partials.views.persediaan', $data)->render();
-        $pdf = PDF::loadHTML($view)->setOptions([
-            'header-html' => view('pelaporan.layouts.header', $data)->render(),
-            'header-line' => true,
-            'margin-top'     => 20,
-            'margin-bottom'  => 15,
-            'margin-left'    => 25,
-            'margin-right'   => 20,
-            'enable-local-file-access' => true,
-            'header-spacing' => 2,
+        return $this->renderPdf('pelaporan.partials.views.persediaan', $data, [
+            'margin-top' => 20,
+            'margin-bottom' => 15,
+            'margin-left' => 25,
+            'margin-right' => 20,
+            'header-spacing' => 2
         ]);
-        return $pdf->inline();
+    
     }
 
     public function simpanSaldo($tahun, $bulan = 1)

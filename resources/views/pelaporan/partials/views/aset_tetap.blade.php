@@ -1,11 +1,10 @@
+@extends('pelaporan.layouts.base')
+
 @php
     use App\Utils\Tanggal;
     use App\Utils\Inventaris;
 @endphp
-
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
-
+@section('content')
 @foreach ($accounts as $acc)
     @if ($loop->iteration > 1)
         <div style="page-break-after: always"></div>
@@ -16,3 +15,4 @@
         'nama' => $acc->nama_akun,
     ])
 @endforeach
+@endsection

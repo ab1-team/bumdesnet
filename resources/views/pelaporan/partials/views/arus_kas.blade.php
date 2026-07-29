@@ -1,11 +1,10 @@
+@extends('pelaporan.layouts.base')
+
 @php
     use App\Utils\Keuangan;
     $keuangan = new Keuangan();
 @endphp
-
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
-
+@section('content')
 {{-- Header --}}
 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
@@ -116,3 +115,4 @@
         @php $nomor++; @endphp
     @endforeach
 </table>
+@endsection

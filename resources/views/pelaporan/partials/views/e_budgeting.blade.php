@@ -1,10 +1,9 @@
+@extends('pelaporan.layouts.base')
+
 @php
     use App\Utils\Tanggal;
 @endphp
-
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
-
+@section('content')
 <table border="0" width="100%">
     <tr>
         <td colspan="3" align="center">
@@ -77,4 +76,4 @@
         @endforeach
     </tbody>
 </table>
-
+@endsection

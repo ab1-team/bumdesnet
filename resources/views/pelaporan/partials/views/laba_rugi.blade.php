@@ -1,7 +1,10 @@
+@extends('pelaporan.layouts.base')
+
 @php
     use App\Utils\Keuangan;
     $keuangan = new Keuangan();
 @endphp
+@section('content')
 
 @php
     $saldo_bln_lalu1 = 0;
@@ -10,10 +13,6 @@
     $saldo_sd_bulan_ini2 = 0;
 
 @endphp
-
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
-
 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
         <td colspan="4" align="center">
@@ -321,4 +320,4 @@
         </tr>
     </tbody>
 </table>
-
+@endsection

@@ -1,5 +1,6 @@
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
+@extends('pelaporan.layouts.base')
+
+@section('content')
 
 <table border="0" width="100%" cellspacing="0" cellpadding="0" style="font-size: 11px;">
     <tr>
@@ -182,3 +183,4 @@
         </tr>
     </tbody>
 </table>
+@endsection

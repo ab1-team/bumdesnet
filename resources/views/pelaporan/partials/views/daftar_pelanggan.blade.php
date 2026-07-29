@@ -1,10 +1,9 @@
+@extends('pelaporan.layouts.base')
+
 @php
     use App\Utils\Tanggal;
 @endphp
-
-@include('pelaporan.layouts.style')
-<title>{{ $title }} {{ $sub_judul }}</title>
-
+@section('content')
 @foreach ($caters as $cater)
     @php
         $filterInstalasi = $cater->installations->filter(fn($ins) => $ins->usage->count() > 0);
@@ -105,4 +104,4 @@
         </tbody>
     </table>
 @endforeach
-
+@endsection
