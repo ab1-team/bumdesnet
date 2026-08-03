@@ -9,7 +9,7 @@
     ];
 @endphp
 
-@extends('layout.base')
+@extends('Layout.base')
 
 @section('content')
     <div class="page-title">

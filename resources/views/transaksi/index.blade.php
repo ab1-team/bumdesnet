@@ -1,4 +1,4 @@
-@extends('layout.base')
+@extends('Layout.base')
 @section('content')
     <!-- Ini adalah Content -->
     <div class="container-fluid" id="container-wrapper">
