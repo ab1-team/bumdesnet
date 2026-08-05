@@ -1264,6 +1264,7 @@ class TransactionController extends Controller
                 'usage_id' => $request->id_usage,
                 'user_id' => auth()->user()->id,
                 'relasi' => $usage->customers->nama,
+                'urutan' => 0,
                 'keterangan' => 'Pendapatan lain ' . $usage->customers->nama . ' (' . $usage->kode_instalasi . ')',
                 'created_at' => date('Y-m-d H:i:s')
             ];
@@ -1282,6 +1283,7 @@ class TransactionController extends Controller
                 'usage_id' => $request->id_usage,
                 'user_id' => auth()->user()->id,
                 'relasi' => $usage->customers->nama,
+                'urutan' => 0,
                 'keterangan' => 'Pendapatan Jasa Internet atas nama ' . $usage->customers->nama . ' (' . $usage->kode_instalasi . ')',
                 'created_at' => date('Y-m-d H:i:s')
             ];
